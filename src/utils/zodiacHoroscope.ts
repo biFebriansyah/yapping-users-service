@@ -27,7 +27,7 @@ export const zodiacGenerate = async (birthday: string): Promise<string> => {
     const cellA1 = await sheet.getCellsInRange('A1:C112');
     if (Array.isArray(cellA1)) {
       cellA1.forEach((value) => {
-        const checkDate = moment(birthday, 'DD-MM-YYYY');
+        const checkDate = moment(birthday, 'YYYY-MM-DD');
         const startDate = moment(value[0], 'YYYY MMMM DD');
         const endDate = moment(value[1], 'YYYY MMMM DD');
         if (checkDate.isBetween(startDate, endDate)) {
@@ -53,7 +53,7 @@ export const horoscopeGenerate = async (birthday: string): Promise<string> => {
         const cellSplit = value[0].split(':');
         const splitStart = cellSplit[0].split(' ');
         const splitDate = cellSplit[1].split('–');
-        const checkDate = moment(birthday, 'DD-MM-YYYY').year(2025);
+        const checkDate = moment(birthday, 'YYYY-MM-DD').year(2025);
         const startDate = moment(splitDate[0].trim(), 'MMMM DD').year(2025);
         const endDate = moment(splitDate[1].trim(), 'MMMM DD').year(2025);
         if (checkDate.isBetween(startDate, endDate)) {
