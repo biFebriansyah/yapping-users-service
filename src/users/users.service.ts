@@ -64,11 +64,22 @@ export class UserService {
       throw error;
     }
   }
+
   async updateData(body: UpdateUserDto): Promise<any> {
     try {
       const objectId = new Types.ObjectId(body.userId);
       await this.userModel.updateOne({ _id: objectId }, { ...body });
       return { userId: body.userId };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteOne(id: string): Promise<any> {
+    try {
+      const objectId = new Types.ObjectId(id);
+      await this.userModel.deleteOne({ _id: objectId }).exec();
+      return { userId: id };
     } catch (error) {
       throw error;
     }

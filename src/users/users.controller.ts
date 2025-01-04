@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param } from '@nestjs/common';
+import { Controller, Param } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import { UserService } from './users.service';
 import { HashPass } from '../utils/bcrypt';
@@ -56,54 +56,82 @@ export class UsersController {
     }
   }
 
-  @Get('/uid')
   @GrpcMethod('UserService', 'FindById')
-  async FindById(@Param() params: GetParams): Promise<GetUserDto> {
+  async FindById(params: GetParams): Promise<GetUserDto> {
     try {
-      const respone = this.userService.getById(params.userId);
+      const respone = await this.userService.getById(params.userId);
+      if (!respone) {
+        throw new RpcException({
+          code: status.NOT_FOUND,
+          message: 'UserId Not Found',
+        });
+      }
+
       return respone;
     } catch (error) {
-      throw error;
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error.message || 'An unexpected error occurred',
+      });
     }
   }
 
-  @Get()
   @GrpcMethod('UserService', 'FetchAll')
   async FetchAll(): Promise<{ users: GetUserDto[] }> {
     try {
       const respone = await this.userService.getAll();
       return { users: respone };
     } catch (error) {
-      throw error;
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error.message || 'An unexpected error occurred',
+      });
     }
   }
 
-  @Post()
   @GrpcMethod('UserService', 'CreateData')
-  async CreateData(@Body() body: CreateUserDto): Promise<any> {
+  async CreateData(body: CreateUserDto): Promise<any> {
     try {
       const password = await HashPass(body.password);
-      const respone = this.userService.createData({ ...body, password });
+      const respone = await this.userService.createData({ ...body, password });
       return respone;
     } catch (error) {
-      throw error;
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error.message || 'An unexpected error occurred',
+      });
     }
   }
 
-  @Put()
   @GrpcMethod('UserService', 'UpdateData')
-  async UpdateData(@Body() body: UpdateUserDto): Promise<any> {
+  async UpdateData(body: UpdateUserDto): Promise<any> {
     try {
       const horoscope = await horoscopeGenerate(body.birthday);
       const zodiac = await zodiacGenerate(body.birthday);
-      const respone = this.userService.updateData({
+      const respone = await this.userService.updateData({
         ...body,
         horoscope,
         zodiac,
       });
       return respone;
     } catch (error) {
-      throw error;
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error.message || 'An unexpected error occurred',
+      });
+    }
+  }
+
+  @GrpcMethod('UserService', 'DeleteData')
+  async DeleteData(params: GetParams): Promise<any> {
+    try {
+      const respone = await this.userService.deleteOne(params.userId);
+      return respone;
+    } catch (error) {
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error.message || 'An unexpected error occurred',
+      });
     }
   }
 }
