@@ -1,0 +1,14 @@
+services:
+  backend:
+    image: bukanebi/user-service:1
+    container_name: user-service
+    restart: unless-stopped
+    ports:
+      - 3002:3002
+    networks:
+      - localnet
+
+networks:
+  localnet:
+    name: localnet
+    external: true
