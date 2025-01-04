@@ -3,6 +3,14 @@ type CreateUserDto = {
   readonly username: string;
   readonly password: string;
 };
+
+type GetUserCertDto = {
+  readonly _id: any;
+  readonly email: string;
+  readonly username: string;
+  readonly password: string;
+};
+
 type UpdateUserDto = {
   readonly userId: string;
   readonly name: string;
@@ -35,4 +43,4 @@ type GetParams = {
   username?: string;
 };
 
-export { CreateUserDto, GetUserDto, GetParams, UpdateUserDto };
+export { CreateUserDto, GetUserDto, GetParams, UpdateUserDto, GetUserCertDto };
