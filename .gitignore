@@ -43,6 +43,7 @@ lerna-debug.log*
 .env.local
 .env.docker
 biidev.json
+.env.*
 
 # temp directory
 .temp
