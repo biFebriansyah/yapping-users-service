@@ -44,10 +44,11 @@ export class UserService {
     }
   }
 
-  async getAll(): Promise<GetUserDto[]> {
+  async getAll(id: string): Promise<GetUserDto[]> {
     try {
+      const objectId = new Types.ObjectId(id);
       const data = await this.userModel
-        .find(null, { password: 0 })
+        .find({ _id: { $ne: objectId } }, { password: 0 })
         .sort({ updatedAt: -1 })
         .exec();
       return data;

@@ -88,9 +88,9 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'FetchAll')
-  async FetchAll(): Promise<{ users: GetUserDto[] }> {
+  async FetchAll(params: GetParams): Promise<{ users: GetUserDto[] }> {
     try {
-      const respone = await this.userService.getAll();
+      const respone = await this.userService.getAll(params.userId);
       return { users: respone };
     } catch (error) {
       throw new RpcException({

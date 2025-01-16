@@ -1,7 +1,6 @@
 syntax = "proto3";
 package users;
 
-import "google/protobuf/empty.proto";
 
 message GetParams {
   string userId = 1;
@@ -40,7 +39,7 @@ message GetUserDto {
   string password = 12;
 }
 
-message UpdateData {
+message UpdateDatas {
   string userId = 1;
   string name = 2;
   string gender = 3;
@@ -60,8 +59,8 @@ service UserService {
   rpc FindByUsername(GetParams) returns (GetUserDto);
   rpc FatchCert(GetParams) returns (GetUserCert);
   rpc FindById(GetParams) returns (GetUserDto);
-  rpc FetchAll(google.protobuf.Empty) returns (StandardRes);
+  rpc FetchAll(GetParams) returns (StandardRes);
   rpc CreateData(CreateParams) returns (CreateRespone);
-  rpc UpdateData(UpdateData) returns (CreateRespone);
+  rpc UpdateData(UpdateDatas) returns (CreateRespone);
   rpc DeleteData(GetParams) returns (CreateRespone);
 }
