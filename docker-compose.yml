@@ -1,6 +1,6 @@
 services:
   backend:
-    image: bukanebi/user-service:1
+    image: bukanebi/user-service:2
     container_name: user-service
     restart: unless-stopped
     ports:

@@ -29,6 +29,9 @@ export class UsersController {
 
       return respone;
     } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
       throw new RpcException({
         code: status.INTERNAL,
         message: error.message || 'An unexpected error occurred',
@@ -49,6 +52,10 @@ export class UsersController {
 
       return respone;
     } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+
       throw new RpcException({
         code: status.INTERNAL,
         message: error.message || 'An unexpected error occurred',
@@ -69,6 +76,9 @@ export class UsersController {
 
       return respone;
     } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
       throw new RpcException({
         code: status.INTERNAL,
         message: error.message || 'An unexpected error occurred',
