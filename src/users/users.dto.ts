@@ -2,6 +2,7 @@ type CreateUserDto = {
   readonly email: string;
   readonly username: string;
   readonly password: string;
+  readonly picture?: string;
 };
 
 type GetUserCertDto = {

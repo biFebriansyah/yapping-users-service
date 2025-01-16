@@ -4,6 +4,7 @@ import { UserService } from './users.service';
 import { HashPass } from '../utils/bcrypt';
 import { status } from '@grpc/grpc-js';
 import { horoscopeGenerate, zodiacGenerate } from '../utils/zodiacHoroscope';
+import { avatarDumy } from '../utils/dumy';
 import {
   GetUserDto,
   CreateUserDto,
@@ -102,8 +103,13 @@ export class UsersController {
   @GrpcMethod('UserService', 'CreateData')
   async CreateData(body: CreateUserDto): Promise<any> {
     try {
+      const randNum = Math.floor(Math.random() * avatarDumy.length);
       const password = await HashPass(body.password);
-      const respone = await this.userService.createData({ ...body, password });
+      const respone = await this.userService.createData({
+        ...body,
+        password,
+        picture: avatarDumy[randNum],
+      });
       return respone;
     } catch (error) {
       throw new RpcException({
