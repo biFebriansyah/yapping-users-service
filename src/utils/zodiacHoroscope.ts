@@ -63,6 +63,7 @@ export const horoscopeGenerate = async (birthday: string): Promise<string> => {
     });
     return result;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };

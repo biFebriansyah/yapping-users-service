@@ -13,16 +13,16 @@ type GetUserCertDto = {
 };
 
 type UpdateUserDto = {
-  readonly userId: string;
+  readonly _id: string;
   readonly name: string;
-  readonly gender: string;
+  readonly gender?: string;
   readonly birthday: string;
-  readonly picture: string;
-  readonly horoscope: string;
-  readonly zodiac: string;
-  readonly height: number;
-  readonly weight: number;
-  readonly email: string;
+  readonly picture?: string;
+  readonly horoscope?: string;
+  readonly zodiac?: string;
+  readonly height?: number;
+  readonly weight?: number;
+  readonly email?: string;
 };
 
 type GetUserDto = {

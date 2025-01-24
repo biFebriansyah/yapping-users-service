@@ -68,9 +68,9 @@ export class UserService {
 
   async updateData(body: UpdateUserDto): Promise<any> {
     try {
-      const objectId = new Types.ObjectId(body.userId);
+      const objectId = new Types.ObjectId(body._id);
       await this.userModel.updateOne({ _id: objectId }, { ...body });
-      return { userId: body.userId };
+      return { userId: body._id };
     } catch (error) {
       throw error;
     }
